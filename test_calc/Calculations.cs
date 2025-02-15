@@ -7,50 +7,57 @@
             Calculations calc = new Calculations();
             try
             {
-                Console.WriteLine("Выберите действие:");
-                Console.WriteLine("1. Сложение\n2. Вычитание\n3. Умножение\n4. Деление\n5. Возведение в степень\n" +
-                    "6. Извлечение корня\n7. Поиск процента от числа\n8. Логарифм числа\n9. Синус\n10. Котангенс");
-                int choice = int.Parse(Console.ReadLine());
-                if (choice == 0 || choice > 10) Console.WriteLine("Неверный номер опреации. Попробуйте снова");
-                else
+                int keepGoing = 0;
+                while(keepGoing == 0)
                 {
-                    Console.WriteLine("Введите числа через пробел:");
-                    List<double> list = Console.ReadLine().Split(' ').Select(x => Convert.ToDouble(x)).ToList();
-                    switch(choice)
+                    Console.WriteLine("Выберите действие:");
+                    Console.WriteLine("1. Сложение\n2. Вычитание\n3. Умножение\n4. Деление\n5. Возведение в степень\n" +
+                        "6. Извлечение корня\n7. Поиск процента от числа\n8. Логарифм числа\n9. Синус\n10. Котангенс");
+                    int choice = int.Parse(Console.ReadLine());
+                    if (choice == 0 || choice > 10) Console.WriteLine("Неверный номер опреации. Попробуйте снова");
+                    else
                     {
-                        case 1:
-                            Console.WriteLine("Результат вычислений: "+ calc.MySum(list));
-                            break;
-                        case 2:
-                            Console.WriteLine("Результат вычислений: " + calc.MyDiff(list));
-                            break;
-                        case 3:
-                            Console.WriteLine("Результат вычислений: " + calc.MyMult(list));
-                            break;
-                        case 4:
-                            Console.WriteLine("Результат вычислений: " + calc.MyDiv(list));
-                            break;
-                        case 5:
-                            Console.WriteLine("Результат вычислений: " + calc.MyDeg(list));
-                            break;
-                        case 6:
-                            Console.WriteLine("Результат вычислений: " + calc.MyRoot(list));
-                            break;
-                        case 7:
-                            Console.WriteLine("Результат вычислений: " + calc.MyProc(list));
-                            break;
-                        case 8:
-                            Console.WriteLine("Результат вычислений: " + calc.MyLog(list));
-                            break;
-                        case 9:
-                            Console.WriteLine("Результат вычислений: " + calc.MySin(list));
-                            break;
-                        case 10:
-                            Console.WriteLine("Результат вычислений: " + calc.MyCot(list));
-                            break;
-                        default:
-                            break;
+                        Console.WriteLine("Введите числа через пробел:");
+                        List<double> list = Console.ReadLine().Split(' ').Select(x => Convert.ToDouble(x)).ToList();
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("Результат вычислений: " + calc.MySum(list));
+                                break;
+                            case 2:
+                                Console.WriteLine("Результат вычислений: " + calc.MyDiff(list));
+                                break;
+                            case 3:
+                                Console.WriteLine("Результат вычислений: " + calc.MyMult(list));
+                                break;
+                            case 4:
+                                Console.WriteLine("Результат вычислений: " + calc.MyDiv(list));
+                                break;
+                            case 5:
+                                Console.WriteLine("Результат вычислений: " + calc.MyDeg(list));
+                                break;
+                            case 6:
+                                Console.WriteLine("Результат вычислений: " + calc.MyRoot(list));
+                                break;
+                            case 7:
+                                Console.WriteLine("Результат вычислений: " + calc.MyProc(list));
+                                break;
+                            case 8:
+                                Console.WriteLine("Результат вычислений: " + calc.MyLog(list));
+                                break;
+                            case 9:
+                                Console.WriteLine("Результат вычислений: " + calc.MySin(list));
+                                break;
+                            case 10:
+                                Console.WriteLine("Результат вычислений: " + calc.MyCot(list));
+                                break;
+                            default:
+                                break;
+                        }
                     }
+                    Console.WriteLine("Вы хотите продолжить? Да(0)/Нет(-1)");
+                    keepGoing = int.Parse(Console.ReadLine());
+                    if (keepGoing < -1 || keepGoing > 0) Console.WriteLine("Данной опции не существует. Попробуйте в другой раз");
                 }
             }
             catch(Exception ex)
@@ -98,6 +105,7 @@
 
         public double MyDeg(List<double> doubles)
         {
+            if (doubles.Count < 2) throw new Exception("Ошибка! Для данной операции необходимо 2 числа. Перепроверьте числа и попробуйте снова"); ;
             if (doubles[0] == 0 && doubles[1] <= 0)
                 throw new Exception("Ошибка! 0 нельзя возводить в 0 или отрицательную степень. Перепроверьте числа и попробуйте снова");
             if (doubles[0] < 0 && doubles[1] % 1 != 0)
@@ -107,6 +115,7 @@
 
         public double MyRoot(List<double> doubles)
         {
+            if (doubles.Count < 2) throw new Exception("Ошибка! Для данной операции необходимо 2 числа. Перепроверьте числа и попробуйте снова"); ;
             if (doubles[1] == 2 && doubles[0] >= 0) return Math.Sqrt(doubles[0]);
             else if (doubles[1] == 3) return Math.Cbrt(doubles[0]);
             else throw new Exception("Ошибка! Извлечение корня невозможно. Перепроверьте числа и попробуйте снова");
@@ -114,11 +123,13 @@
 
         public double MyProc(List<double> doubles)
         {
+            if (doubles.Count < 2) throw new Exception("Ошибка! Для данной операции необходимо 2 числа. Перепроверьте числа и попробуйте снова"); ;
             return doubles[0] * (doubles[1] / 100);
         }
 
         public double MyLog(List<double> doubles)
         {
+            if (doubles.Count < 2) throw new Exception("Ошибка! Для данной операции необходимо 2 числа. Перепроверьте числа и попробуйте снова"); ;
             if (doubles[1] != 1 && doubles[1] > 0 && doubles[0] >= 0) return Math.Log(doubles[0], doubles[1]);
             else throw new Exception("Ошибка! Нахождение логарифма невозможно. Перепроверьте числа и попробуйте снова");
         }
